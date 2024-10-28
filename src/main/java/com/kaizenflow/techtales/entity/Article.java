@@ -1,8 +1,6 @@
 package com.kaizenflow.techtales.entity;
 
-import com.kaizenflow.techtales.dto.AuthorDTO;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

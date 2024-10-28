@@ -2,6 +2,7 @@ package com.kaizenflow.techtales.service;
 
 import com.kaizenflow.techtales.dto.ArticleDTO;
 import com.kaizenflow.techtales.repository.ArticleRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,14 @@ public class ArticleService {
   }
 
   public ArticleDTO getArticleById(Long id) {
-    return articleRepository.getArticleById(id);
+    return articleRepository.getArticleById(id).orElseThrow();
+  }
+
+  public List<ArticleDTO> getAllArticles() {
+    return articleRepository.findAllArticleDTOs();
+  }
+
+  public List<ArticleDTO> getAllArticlesByAuthorId(Long id) {
+    return articleRepository.findAllArticleDTOsByAuthorId(id);
   }
 }

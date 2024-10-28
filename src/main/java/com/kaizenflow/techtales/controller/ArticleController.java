@@ -13,21 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/v1/articles")
 public class ArticleController {
 
+  private final ArticleService articleService;
+
   @Autowired
-  private ArticleService articleService;
+  public ArticleController(ArticleService articleService) {
+    this.articleService = articleService;
+  }
 
   @GetMapping("/{id}")
   public ArticleDTO getArticle(@PathVariable("id") Long id) {
-    System.out.println("Hello World");
     return articleService.getArticleById(id);
   }
 
   @GetMapping
   public List<ArticleDTO> getArticleList() {
-    return null;
+    return articleService.getAllArticles();
   }
 
-  public List<ArticleDTO> getArticleByAuthor(@PathVariable String authorName) {
-    return null;
+  @GetMapping("/author/{id}")
+  public List<ArticleDTO> getArticleByAuthorId(@PathVariable("id") Long id) {
+    return articleService.getAllArticlesByAuthorId(id);
   }
 }
