@@ -4,17 +4,15 @@ Tech Tales is a modern blogging platform API developed by KaizenFlow Technologie
 
 ## Technology Stack🛠️
 
-Java 21
-Kotlin
-Spring Boot
-Gradle (for build management)
+- Java 21
+- Spring Boot
+- Gradle (for build management)
 
 ## Prerequisites📋
 
 To run this project, you need to have the following installed:
 
 - JDK 21
-- Kotlin 1.8 or later
 - Gradle 8.x
 - Docker
 
