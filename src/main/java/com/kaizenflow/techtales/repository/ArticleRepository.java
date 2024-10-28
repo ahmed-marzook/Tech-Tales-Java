@@ -26,9 +26,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   List<ArticleDTO> findAllArticleDTOs();
 
   @Query(
-          "SELECT new com.kaizenflow.techtales.dto.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
-                  + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
-                  + "a.createdAt, a.updatedAt) "
-                  + "FROM Article a WHERE a.author.id = :authorId")
-  List<ArticleDTO> findAllArticleDTOsByAuthorId(@Param("authorId")Long authorId);
+      "SELECT new com.kaizenflow.techtales.dto.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+          + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
+          + "a.createdAt, a.updatedAt) "
+          + "FROM Article a WHERE a.author.id = :authorId")
+  List<ArticleDTO> findAllArticleDTOsByAuthorId(@Param("authorId") Long authorId);
 }
