@@ -61,10 +61,14 @@ async function fetchAllArticles() {
     console.log(articles)
 
     articles.forEach(element => {
-        articleListElem.innerHTML += `<div class="article-item"><h2>${element.title}</h2><p>${element.authorFullName}</p><p><em>${element.publishingDate}</em></p></div>`
+        articleListElem.innerHTML += `
+        <div class="article-item">
+        <h2>${element.title}</h2>
+        <p>${element.authorFullName}</p>
+        <span><em>${element.publishingDate}</em></span>
+        </div>
+        `
     });
-
-
 }
 
 fetchAllArticles()

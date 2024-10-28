@@ -1,6 +1,7 @@
 package com.kaizenflow.techtales.controller;
 
-import com.kaizenflow.techtales.dto.ArticleDTO;
+import com.kaizenflow.techtales.dto.article.ArticleCreateRequest;
+import com.kaizenflow.techtales.dto.article.ArticleDTO;
 import com.kaizenflow.techtales.service.ArticleService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,11 @@ public class ArticleController {
     return articleService.getAllArticlesByAuthorId(id);
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-          produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> createNewArticle(@RequestBody ArticleDTO newArticle) {
+  @PostMapping(
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> createNewArticle(@RequestBody ArticleCreateRequest newArticle)
+      throws Exception {
     return new ResponseEntity<>(articleService.createNewArticle(newArticle), HttpStatus.CREATED);
   }
 }

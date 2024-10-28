@@ -1,6 +1,6 @@
 package com.kaizenflow.techtales.repository;
 
-import com.kaizenflow.techtales.dto.ArticleDTO;
+import com.kaizenflow.techtales.dto.article.ArticleDTO;
 import com.kaizenflow.techtales.entity.Article;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
           + "FROM Article a WHERE a.id = :id")
@@ -19,14 +19,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   // Method to find all articles and map them to DTOs
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
           + "FROM Article a")
   List<ArticleDTO> findAllArticleDTOs();
 
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
           + "FROM Article a WHERE a.author.id = :authorId")

@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .info(new Info().title("Tech Tales API").version("V1"));
-    }
-
+  @Bean
+  OpenAPI customOpenAPI() {
+    return new OpenAPI().info(new Info().title("Tech Tales API").version("V1"));
+  }
 }

@@ -1,9 +1,8 @@
-package com.kaizenflow.techtales.dto;
+package com.kaizenflow.techtales.dto.article;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.ZonedDateTime;
 
-// ArticleDTO.java
 public record ArticleDTO(
     Long id,
     String title,

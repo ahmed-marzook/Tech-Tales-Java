@@ -41,6 +41,7 @@ public class Article {
   @Column(nullable = false, columnDefinition = "TEXT")
   private String content;
 
+  @CreationTimestamp
   @Column(name = "publishing_date")
   private ZonedDateTime publishingDate;
 

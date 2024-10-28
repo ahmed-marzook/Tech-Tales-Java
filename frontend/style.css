@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap");
 
+:root {
+  --pastel-blue: #bfecff;
+  --pastel-purple: #cdc1ff;
+  --pastel-cream: #fff6e3;
+  --pastel-pink: #ffccea;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -8,7 +15,7 @@ body {
   font-family: "Roboto", sans-serif;
   align-items: center;
   height: 100vh;
-  background-color: #bfecff;
+  background-color: var(--pastel-cream);
   margin: 0;
 }
 
@@ -16,8 +23,9 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #ffccea;
+  background-color: var(--pastel-blue);
   padding: 15px;
+  box-shadow: 0px 15px 10px -15px #111;
 }
 
 .nav-menu {
@@ -43,7 +51,6 @@ body {
 }
 
 .article-item p {
-  margin: 0;
 }
 
 .article-item h2 {
@@ -52,4 +59,15 @@ body {
 
 .article-item {
   margin-bottom: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 15px;
+  border-style: none none none solid;
+  border-left-color: var(--pastel-purple);
+}
+
+.article-item:hover {
+  border-left-color: var(--pastel-pink);
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
