@@ -50,7 +50,7 @@ The application should now be running on ```http://localhost:8080```🎉
 
 ## API Documentation📖
 
-[Provide information about API endpoints or link to Swagger/OpenAPI documentation]
+Swagger API Docs: ```http://localhost:8080/swagger-ui.html```
 
 ## Contributing🤝
 

@@ -27,4 +27,9 @@ public class ArticleService {
   public List<ArticleDTO> getAllArticlesByAuthorId(Long id) {
     return articleRepository.findAllArticleDTOsByAuthorId(id);
   }
+
+  public Long createNewArticle(ArticleDTO articleDTO) {
+
+    return 1L;
+  }
 }
