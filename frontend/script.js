@@ -59,7 +59,7 @@ async function fetchAllArticles() {
     const articles = await getData('http://localhost:8080/api/v1/articles');
     const articleListElem = document.querySelector('.article-list')
     console.log(articles)
-
+    articleListElem.innerHTML = ''
     articles.forEach(element => {
         articleListElem.innerHTML += `
         <div class="article-item">
