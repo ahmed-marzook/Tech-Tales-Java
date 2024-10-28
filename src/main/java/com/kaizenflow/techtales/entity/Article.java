@@ -1,6 +1,8 @@
 package com.kaizenflow.techtales.entity;
 
+import com.kaizenflow.techtales.dto.AuthorDTO;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "article")
@@ -29,31 +30,31 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 public class Article {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotBlank(message = "Title is required")
-    @Size(min = 5, max = 255, message = "Title must be between 5 and 255 characters")
-    @Column(nullable = false)
-    private String title;
+  @NotBlank(message = "Title is required")
+  @Size(min = 5, max = 255, message = "Title must be between 5 and 255 characters")
+  @Column(nullable = false)
+  private String title;
 
-    @NotBlank(message = "Content is required")
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
+  @NotBlank(message = "Content is required")
+  @Column(nullable = false, columnDefinition = "TEXT")
+  private String content;
 
-    @Column(name = "publishing_date")
-    private ZonedDateTime publishingDate;
+  @Column(name = "publishing_date")
+  private ZonedDateTime publishingDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private Author author;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "author_id")
+  private Author author;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private ZonedDateTime createdAt;
+  @CreationTimestamp
+  @Column(name = "created_at", nullable = false, updatable = false)
+  private ZonedDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private ZonedDateTime updatedAt;
+  @UpdateTimestamp
+  @Column(name = "updated_at", nullable = false)
+  private ZonedDateTime updatedAt;
 }

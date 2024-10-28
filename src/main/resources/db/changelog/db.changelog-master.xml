@@ -11,4 +11,6 @@
     <!-- Include all SQL files from the 'sql_changesets' directory -->
     <includeAll path="db/changelog/1"/>
 
+    <includeAll path="db/changelog/test-data"/>
+
 </databaseChangeLog>

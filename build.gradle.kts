@@ -42,10 +42,12 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-subprojects {
-	spotless {
-		java {
-			googleJavaFormat("1.24.0")
-		}
+
+spotless {
+	java {
+		googleJavaFormat()
+		importOrder()
+		trimTrailingWhitespace()
+		endWithNewline()
 	}
 }
