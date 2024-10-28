@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
+	id("com.diffplug.spotless") version "6.25.0"
 }
 
 group = "com.kaizenflow"
@@ -39,4 +40,12 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+subprojects {
+	spotless {
+		java {
+			googleJavaFormat("1.24.0")
+		}
+	}
 }
