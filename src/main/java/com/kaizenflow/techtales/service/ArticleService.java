@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,12 +31,12 @@ public class ArticleService {
     return articleRepository.getArticleById(id).orElseThrow();
   }
 
-  public List<ArticleDTO> getAllArticles() {
-    return articleRepository.findAllArticleDTOs();
+  public Page<ArticleDTO> getAllArticles(Pageable pageable) {
+    return articleRepository.findAllArticleDTOs(pageable);
   }
 
-  public List<ArticleDTO> getAllArticlesByAuthorId(Long id) {
-    return articleRepository.findAllArticleDTOsByAuthorId(id);
+  public Page<ArticleDTO> getAllArticlesByAuthorId(Long id, Pageable pageable) {
+    return articleRepository.findAllArticleDTOsByAuthorId(id, pageable);
   }
 
   @Transactional()
