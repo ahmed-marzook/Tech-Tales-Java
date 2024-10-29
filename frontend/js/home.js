@@ -55,10 +55,22 @@ async function deleteData(url) {
     return fetchRequest(url, 'DELETE');
 }
 
-async function fetchIntialArticles() {
-    const articles = await getData('http://localhost:8080/api/v1/articles');
+let currentPage = 0;
+let maxPage;
+
+async function changePage(pageNumber) {
+    // Make the URL construction more readable
+    const baseUrl = 'http://localhost:8080/api/v1/articles';
+    const params = new URLSearchParams({
+        page: pageNumber,
+        size: 5
+    });
+
+    const articles = await getData(`${baseUrl}?${params}`);
     const articleListElem = document.querySelector('.article-list')
-    console.log(articles)
+
+    maxPage = articles.page.totalPages - 1;
+
     articleListElem.innerHTML = ''
     articles.content.forEach(element => {
         articleListElem.innerHTML += createArticleHtmlElem(element.title, element.authorFullName, element.publishingDate)
@@ -75,4 +87,15 @@ function createArticleHtmlElem(title, authorFullName, publishingDate) {
     `
 }
 
-fetchIntialArticles()
+changePage(currentPage);
+
+document.querySelector(".pagination-next").addEventListener('click', () => {
+    currentPage = Math.min(currentPage + 1, maxPage);
+    changePage(currentPage)
+});
+
+document.querySelector(".pagination-prev").addEventListener('click', () => {
+    currentPage = Math.max(currentPage - 1, 0);
+    changePage(currentPage)
+});
+

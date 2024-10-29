@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+          value = "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
           + "FROM Article a WHERE a.id = :id")
@@ -22,16 +22,18 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   // Method to find all articles and map them to DTOs
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+      value = "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
-          + "FROM Article a")
+          + "FROM Article a",
+          countQuery = "SELECT COUNT(a) FROM Article a")
   Page<ArticleDTO> findAllArticleDTOs(Pageable pageable);
 
   @Query(
-      "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
+          value = "SELECT new com.kaizenflow.techtales.dto.article.ArticleDTO(a.id, a.title, a.content, a.publishingDate, "
           + "a.author.id, CONCAT(a.author.firstName, ' ', a.author.lastName), "
           + "a.createdAt, a.updatedAt) "
-          + "FROM Article a WHERE a.author.id = :authorId")
+          + "FROM Article a WHERE a.author.id = :authorId",
+          countQuery = "SELECT COUNT(a) FROM Article a WHERE a.author.id = :authorId")
   Page<ArticleDTO> findAllArticleDTOsByAuthorId(@Param("authorId") Long authorId, Pageable pageable);
 }
