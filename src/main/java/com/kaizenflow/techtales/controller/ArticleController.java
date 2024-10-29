@@ -3,7 +3,6 @@ package com.kaizenflow.techtales.controller;
 import com.kaizenflow.techtales.dto.article.ArticleCreateRequest;
 import com.kaizenflow.techtales.dto.article.ArticleDTO;
 import com.kaizenflow.techtales.service.ArticleService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,12 +34,13 @@ public class ArticleController {
   }
 
   @GetMapping
-  public Page<ArticleDTO> getArticleList(@PageableDefault(value = 5, page = 0)Pageable pageable) {
+  public Page<ArticleDTO> getArticleList(@PageableDefault(value = 5, page = 0) Pageable pageable) {
     return articleService.getAllArticles(pageable);
   }
 
   @GetMapping("/author/{id}")
-  public Page<ArticleDTO> getArticleByAuthorId(@PathVariable("id") Long id, @PageableDefault(value = 5, page = 0)Pageable pageable) {
+  public Page<ArticleDTO> getArticleByAuthorId(
+      @PathVariable("id") Long id, @PageableDefault(value = 5, page = 0) Pageable pageable) {
     return articleService.getAllArticlesByAuthorId(id, pageable);
   }
 

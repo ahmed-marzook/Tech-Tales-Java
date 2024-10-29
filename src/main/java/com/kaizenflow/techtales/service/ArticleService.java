@@ -8,7 +8,6 @@ import com.kaizenflow.techtales.repository.ArticleRepository;
 import com.kaizenflow.techtales.repository.AuthorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
