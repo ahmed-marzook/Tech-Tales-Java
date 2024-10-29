@@ -8,6 +8,8 @@ import com.kaizenflow.techtales.repository.ArticleRepository;
 import com.kaizenflow.techtales.repository.AuthorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,7 @@ public class ArticleService {
   }
 
   @Transactional()
-  public Long createNewArticle(ArticleCreateRequest newRequest) throws Exception {
+  public Long createNewArticle(ArticleCreateRequest newRequest) {
     Author existingAuthor =
         authorRepository
             .findById(newRequest.authorId())
@@ -52,5 +54,42 @@ public class ArticleService {
             .build();
 
     return articleRepository.save(newArticleRequest).getId();
+  }
+
+  @Transactional()
+  public Long updateArticle(ArticleDTO updateArticle) {
+    Article article = articleRepository
+            .findById(updateArticle.id())
+            .orElseThrow(() -> new EntityNotFoundException("No Exist Article for That ID"));
+
+    // Used Safelist.basic() which allows basic HTML formatting (b, i, u, strong, em) but removes scripts and dangerous tags
+    if (updateArticle.content() != null) {
+      String sanitizedContent = Jsoup.clean(
+              updateArticle.content(),
+              Safelist.basic()
+      );
+      article.setContent(sanitizedContent);
+    }
+
+    // Safelist.none() - removes all HTML
+    if (updateArticle.title() != null) {
+      String sanitizedTitle = Jsoup.clean(
+              updateArticle.title(),
+              Safelist.none()
+      );
+      article.setTitle(sanitizedTitle);
+    }
+
+    return article.getId();
+  }
+
+  @Transactional()
+  public void deleteArticle(Long id) {
+    Article article =
+        articleRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("No Exist Author for That ID"));
+
+    articleRepository.delete(article);
   }
 }
