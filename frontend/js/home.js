@@ -55,20 +55,24 @@ async function deleteData(url) {
     return fetchRequest(url, 'DELETE');
 }
 
-async function fetchAllArticles() {
+async function fetchIntialArticles() {
     const articles = await getData('http://localhost:8080/api/v1/articles');
     const articleListElem = document.querySelector('.article-list')
     console.log(articles)
     articleListElem.innerHTML = ''
-    articles.forEach(element => {
-        articleListElem.innerHTML += `
-        <div class="article-item">
-        <h2>${element.title}</h2>
-        <p>${element.authorFullName}</p>
-        <span><em>${element.publishingDate}</em></span>
-        </div>
-        `
+    articles.content.forEach(element => {
+        articleListElem.innerHTML += createArticleHtmlElem(element.title, element.authorFullName, element.publishingDate)
     });
 }
 
-fetchAllArticles()
+function createArticleHtmlElem(title, authorFullName, publishingDate) {
+    return `
+    <div class="article-item">
+        <h2>${title}</h2>
+        <p>${authorFullName}</p>
+        <span><em>${publishingDate}</em></span>
+    </div>
+    `
+}
+
+fetchIntialArticles()
