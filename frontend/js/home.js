@@ -1,60 +1,3 @@
-// Generic fetch request function with error handling
-async function fetchRequest(url, method, data = null) {
-    const options = {
-        method: method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-    };
-
-    if (data && method !== 'GET') {
-        options.body = JSON.stringify(data);
-    }
-
-    try {
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // For DELETE requests, we might not have any content to parse
-        if (method === 'DELETE') {
-            return { status: response.status, statusText: response.statusText };
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error(`Error during ${method} request:`, error);
-        throw error;
-    }
-}
-
-// GET request
-async function getData(url, params = {}) {
-    // Handle query parameters
-    const queryString = new URLSearchParams(params).toString();
-    const urlWithParams = queryString ? `${url}?${queryString}` : url;
-
-    return fetchRequest(urlWithParams, 'GET');
-}
-
-// POST request
-async function postData(url, data) {
-    return fetchRequest(url, 'POST', data);
-}
-
-// PUT request
-async function putData(url, data) {
-    return fetchRequest(url, 'PUT', data);
-}
-
-// DELETE request
-async function deleteData(url) {
-    return fetchRequest(url, 'DELETE');
-}
-
 let currentPage = 0;
 let maxPage;
 
@@ -73,19 +16,52 @@ async function changePage(pageNumber) {
 
     articleListElem.innerHTML = ''
     articles.content.forEach(element => {
-        articleListElem.innerHTML += createArticleHtmlElem(element.title, element.authorFullName, element.publishingDate)
+        articleListElem.append(createArticleElement(element.id, element.title, element.authorFullName, element.publishingDate));
     });
 }
 
-function createArticleHtmlElem(title, authorFullName, publishingDate) {
-    return `
-    <div class="article-item">
-        <h2>${title}</h2>
-        <p>${authorFullName}</p>
-        <span><em>${publishingDate}</em></span>
-    </div>
-    `
+// Function to create and attach article element with event listener
+function createArticleElement(id, title, authorFullName, publishingDate) {
+    // Create the HTML string
+    const articleHTML = `
+        <div class="article-item" id="${id}">
+            <h2 class="article-title">${title}</h2>
+            <p class="article-author">${authorFullName}</p>
+            <span class="article-date"><em>${publishingDate}</em></span>
+        </div>
+    `;
+
+    // Convert HTML string to DOM element
+    // Template approach - safer and more efficient
+    const template = document.createElement('template');
+    template.innerHTML = articleHTML.trim();
+    const articleElement = template.content.firstElementChild;
+
+    // Add event listener to the element
+    articleElement.addEventListener('click', (event) => {
+        handleArticleClick(id, title, event);
+    });
+
+    // Add hover effect listener
+    articleElement.addEventListener('mouseenter', () => {
+        articleElement.classList.add('article-hover');
+    });
+
+    articleElement.addEventListener('mouseleave', () => {
+        articleElement.classList.remove('article-hover');
+    });
+
+    return articleElement;
 }
+
+// Handler function for article clicks
+async function handleArticleClick(id, title, event) {
+    const baseUrl = `http://localhost:8080/api/v1/articles/${id}`;
+    const article = await getData(`${baseUrl}`);
+    window.location.href = "./article.html";
+    console.log(article)
+}
+
 
 changePage(currentPage);
 

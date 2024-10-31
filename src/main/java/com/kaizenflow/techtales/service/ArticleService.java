@@ -58,25 +58,21 @@ public class ArticleService {
 
   @Transactional()
   public Long updateArticle(ArticleDTO updateArticle) {
-    Article article = articleRepository
+    Article article =
+        articleRepository
             .findById(updateArticle.id())
             .orElseThrow(() -> new EntityNotFoundException("No Exist Article for That ID"));
 
-    // Used Safelist.basic() which allows basic HTML formatting (b, i, u, strong, em) but removes scripts and dangerous tags
+    // Used Safelist.basic() which allows basic HTML formatting (b, i, u, strong, em) but removes
+    // scripts and dangerous tags
     if (updateArticle.content() != null) {
-      String sanitizedContent = Jsoup.clean(
-              updateArticle.content(),
-              Safelist.basic()
-      );
+      String sanitizedContent = Jsoup.clean(updateArticle.content(), Safelist.basic());
       article.setContent(sanitizedContent);
     }
 
     // Safelist.none() - removes all HTML
     if (updateArticle.title() != null) {
-      String sanitizedTitle = Jsoup.clean(
-              updateArticle.title(),
-              Safelist.none()
-      );
+      String sanitizedTitle = Jsoup.clean(updateArticle.title(), Safelist.none());
       article.setTitle(sanitizedTitle);
     }
 
