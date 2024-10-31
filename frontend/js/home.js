@@ -42,15 +42,6 @@ function createArticleElement(id, title, authorFullName, publishingDate) {
         handleArticleClick(id, title, event);
     });
 
-    // Add hover effect listener
-    articleElement.addEventListener('mouseenter', () => {
-        articleElement.classList.add('article-hover');
-    });
-
-    articleElement.addEventListener('mouseleave', () => {
-        articleElement.classList.remove('article-hover');
-    });
-
     return articleElement;
 }
 
