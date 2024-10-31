@@ -49,7 +49,7 @@ function createArticleElement(id, title, authorFullName, publishingDate) {
 async function handleArticleClick(id, title, event) {
     const baseUrl = `http://localhost:8080/api/v1/articles/${id}`;
     const article = await getData(`${baseUrl}`);
-    window.location.href = "./article.html";
+    window.location.href = `./article.html?id=${encodeURIComponent(id)}`;
     console.log(article)
 }
 
