@@ -7,6 +7,7 @@ Tech Tales is a modern blogging platform API developed by KaizenFlow Technologie
 - Java 21
 - Spring Boot
 - Gradle (for build management)
+- Vanilla JS, HTML and CSS Frontend
 
 ## Prerequisites📋
 
@@ -21,13 +22,13 @@ To run this project, you need to have the following installed:
 Clone the repository:
 
 ```bash
-git clone <pending>
+git clone git@github.com:ahmed-marzook/Tech-Tales-Java.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd Tech-Tales
+cd Tech-Tales-Java
 ```
 
 Build the project:
@@ -43,6 +44,8 @@ Run the application:
 ```
 
 The application should now be running on ```http://localhost:8080```🎉
+
+Open `index.html` to open the frontend.
 
 ## Project Structure🏗️
 

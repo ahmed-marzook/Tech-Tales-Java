@@ -15,5 +15,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+    restart: always
+
 volumes:
   postgres_data:
