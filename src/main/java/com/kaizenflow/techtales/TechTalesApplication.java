@@ -10,9 +10,9 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
-public class TechtalesApplication {
+public class TechTalesApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(TechtalesApplication.class, args);
+    SpringApplication.run(TechTalesApplication.class, args);
   }
 }

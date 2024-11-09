@@ -2,6 +2,7 @@ import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "../../assets/logoipsum-297.svg";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -10,9 +11,9 @@ function Header() {
         <img src="../../assets/logoipsum-297.svg" alt="Tech Tales Logo" />
       </div>
       <div className="nav-menu">
-        <a href="#">Home</a>
-        <a href="#">Authors</a>
-        <a href="#">Create Article</a>
+        <a href="/">Home</a>
+        <a href="/authors">Authors</a>
+        <a href="/article/create">Create Article</a>
       </div>
       <div className="search-bar">
         <div className="search">
