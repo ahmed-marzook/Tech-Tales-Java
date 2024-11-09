@@ -1,0 +1,29 @@
+import "./Header.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import "../../assets/logoipsum-297.svg";
+
+function Header() {
+  return (
+    <nav className="navbar">
+      <div className="logo">
+        <img src="../../assets/logoipsum-297.svg" alt="Tech Tales Logo" />
+      </div>
+      <div className="nav-menu">
+        <a href="#">Home</a>
+        <a href="#">Authors</a>
+        <a href="#">Create Article</a>
+      </div>
+      <div className="search-bar">
+        <div className="search">
+          <input type="text" className="input" placeholder="Search..." />
+          <button className="btn">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Header;
