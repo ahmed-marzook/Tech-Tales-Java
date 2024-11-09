@@ -10,17 +10,22 @@ function Home() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [articleList, setArticleList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(BASE_URL);
-        console.log(response.data.content);
+        const response = await axios.get(BASE_URL, {
+          params: {
+            page: page,
+            size: 5,
+          },
+        });
+        setMaxPage(response.data.page.totalPages);
         setArticleList(response.data.content);
       } catch (err) {
-        console.log(err);
-        console.log("Error fetching data: " + err.message);
         setError(err);
       } finally {
         setIsLoading(false);
@@ -28,7 +33,7 @@ function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [page]);
 
   if (error) {
     return (
@@ -40,6 +45,18 @@ function Home() {
     );
   }
 
+  function incrementPage() {
+    setPage((currentPage) => {
+      return Math.min(currentPage + 1, maxPage);
+    });
+  }
+
+  function decrementPage() {
+    setPage((currentPage) => {
+      return Math.max(currentPage - 1, 0);
+    });
+  }
+
   return (
     <div className="container">
       <h1>All Articles</h1>
@@ -47,13 +64,21 @@ function Home() {
         {isLoading && <h1>LOADING...</h1>}
         {articleList.map((article) => (
           <ArticleItem
-            key={article.key}
+            key={article.id}
             id={article.id}
             title={article.title}
             author={article.authorFullName}
             publishingDate={article.publishingDate}
           />
         ))}
+      </div>
+      <div className="pagination">
+        <button className="pagination-prev" onClick={decrementPage}>
+          &laquo;
+        </button>
+        <button className="pagination-next" onClick={incrementPage}>
+          &raquo;
+        </button>
       </div>
     </div>
   );
