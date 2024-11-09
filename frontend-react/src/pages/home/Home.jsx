@@ -76,6 +76,7 @@ function Home() {
         <button className="pagination-prev" onClick={decrementPage}>
           &laquo;
         </button>
+        <h1>{page}</h1>
         <button className="pagination-next" onClick={incrementPage}>
           &raquo;
         </button>

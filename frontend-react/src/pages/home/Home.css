@@ -25,6 +25,10 @@ body {
   width: 80vw;
 }
 
+.pagination {
+  display: flex;
+}
+
 .pagination button {
   color: black;
   float: left;
