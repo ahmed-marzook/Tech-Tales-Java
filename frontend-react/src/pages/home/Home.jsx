@@ -2,10 +2,12 @@ import "./Home.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ArticleItem from "../../components/article/ArticleItem";
+import ErrorPage from "../not-found/ErrorPage";
 
 const BASE_URL = "http://localhost:8080/api/v1/articles";
 
 function Home() {
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [articleList, setArticleList] = useState([]);
 
@@ -17,7 +19,9 @@ function Home() {
         console.log(response.data.content);
         setArticleList(response.data.content);
       } catch (err) {
+        console.log(err);
         console.log("Error fetching data: " + err.message);
+        setError(err);
       } finally {
         setIsLoading(false);
       }
@@ -25,6 +29,16 @@ function Home() {
 
     fetchData();
   }, []);
+
+  if (error) {
+    return (
+      <ErrorPage
+        title="Error Loading Data"
+        message={`Error fetching data: ${error.message}`}
+        errorCode="500"
+      />
+    );
+  }
 
   return (
     <div className="container">
