@@ -1,14 +1,14 @@
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import "../../assets/logoipsum-297.svg";
+import logo from "../../assets/logoipsum-297.svg";
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <img src="../../assets/logoipsum-297.svg" alt="Tech Tales Logo" />
+        <img src={logo} alt="Tech Tales Logo" />
       </div>
       <div className="nav-menu">
         <a href="/">Home</a>
