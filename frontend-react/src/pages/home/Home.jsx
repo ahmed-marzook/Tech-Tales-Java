@@ -60,23 +60,25 @@ function Home() {
   return (
     <div className="container">
       <h1>All Articles</h1>
-      <div className="article-list">
-        {isLoading && <h1>LOADING...</h1>}
-        {articleList.map((article) => (
-          <ArticleItem
-            key={article.id}
-            id={article.id}
-            title={article.title}
-            author={article.authorFullName}
-            publishingDate={article.publishingDate}
-          />
-        ))}
-      </div>
+      {isLoading && <h1>LOADING...</h1>}
+      {!isLoading && (
+        <div className="article-list">
+          {articleList.map((article) => (
+            <ArticleItem
+              key={article.id}
+              id={article.id}
+              title={article.title}
+              author={article.authorFullName}
+              publishingDate={article.publishingDate}
+            />
+          ))}
+        </div>
+      )}
       <div className="pagination">
         <button className="pagination-prev" onClick={decrementPage}>
           &laquo;
         </button>
-        <h1>{page}</h1>
+        <h1>{page + 1}</h1>
         <button className="pagination-next" onClick={incrementPage}>
           &raquo;
         </button>
