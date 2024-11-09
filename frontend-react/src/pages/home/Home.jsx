@@ -2,7 +2,7 @@
 import "./Home.css";
 import { useState, useEffect, useRef } from "react"; // React hooks for state and lifecycle management
 import axios from "axios"; // HTTP client for making API requests
-import ArticleItem from "../../components/article/ArticleItem"; // Component to render individual articles
+import ArticleItem from "../../components/article-item/ArticleItem"; // Component to render individual articles
 import ErrorPage from "../not-found/ErrorPage"; // Error page component for handling errors
 
 // Base URL for the articles API endpoint
