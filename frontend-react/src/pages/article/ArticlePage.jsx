@@ -71,7 +71,7 @@ function ArticlePage() {
                 <span className="metadata-label">Published:</span>
                 <time>
                   {new Date(article.publishingDate).toLocaleDateString(
-                    "en-US",
+                    "en-UK",
                     {
                       year: "numeric",
                       month: "long",
@@ -83,7 +83,7 @@ function ArticlePage() {
               <div className="metadata-item">
                 <span className="metadata-label">Last Updated:</span>
                 <time>
-                  {new Date(article.updatedAt).toLocaleDateString("en-US", {
+                  {new Date(article.updatedAt).toLocaleDateString("en-UK", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
