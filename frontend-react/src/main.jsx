@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import CreateArticlePage from "./pages/create-article/CreateArticlePage";
 import NotFoundPage from "./pages/not-found/ErrorPage";
 import AuthorPage from "./pages/author/AuthorPage";
+import ArticlePage from "./pages/article/ArticlePage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,17 @@ const router = createBrowserRouter([
   {
     path: "/authors",
     element: <AuthorPage />,
+    errorElement: (
+      <NotFoundPage
+        title="Page Not Found"
+        message="Oops! The page you're looking for doesn't exist."
+        errorCode="404"
+      />
+    ),
+  },
+  {
+    path: "/article/:articleId",
+    element: <ArticlePage />,
     errorElement: (
       <NotFoundPage
         title="Page Not Found"
