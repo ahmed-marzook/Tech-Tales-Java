@@ -2,14 +2,14 @@ import "./ArticleItem.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function ArticleItem(props) {
+function ArticleItem({ id, title, author, publishingDate }) {
   return (
-    <Link to={`/article/${props.id}`} className="article-link">
-      <div className="article-item" id={props.id}>
-        <h2 className="article-title-comp">{props.title}</h2>
-        <p className="article-author">{props.author}</p>
+    <Link to={`/article/${id}`} className="article-link">
+      <div className="article-item" id={id}>
+        <h2 className="article-title-comp">{title}</h2>
+        <p className="article-author">{author}</p>
         <span className="article-date">
-          <em>{props.publishingDate}</em>
+          <em>{publishingDate}</em>
         </span>
       </div>
     </Link>
