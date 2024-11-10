@@ -1,5 +1,12 @@
+.article-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .article-item h2 {
   margin: 0;
+  font-size: 15pt;
 }
 
 .article-item {

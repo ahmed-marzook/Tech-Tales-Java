@@ -57,16 +57,48 @@ function ArticlePage() {
   }
 
   return (
-    <div className="container">
-      {isLoading && <h1>LOADING...</h1>}
-      {!isLoading && (
-        <div>
-          <h1>{article.title}</h1>
-          <span>Published: {article.publishingDate}</span>
-          <span>Last Updated: {article.updatedAt}</span>
-          <p>{article.content}</p>
-          <span>By: {article.authorFullName}</span>
+    <div className="article-container">
+      {isLoading ? (
+        <div className="loading">
+          <h1>LOADING...</h1>
         </div>
+      ) : (
+        <article>
+          <header className="article-header">
+            <h1 className="article-title">{article.title}</h1>
+            <div className="article-metadata">
+              <div className="metadata-item">
+                <span className="metadata-label">Published:</span>
+                <time>
+                  {new Date(article.publishingDate).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </time>
+              </div>
+              <div className="metadata-item">
+                <span className="metadata-label">Last Updated:</span>
+                <time>
+                  {new Date(article.updatedAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
+            </div>
+          </header>
+
+          <div className="article-content">{article.content}</div>
+
+          <footer className="article-footer">
+            <div className="author-info">By: {article.authorFullName}</div>
+          </footer>
+        </article>
       )}
     </div>
   );

@@ -6,7 +6,7 @@ function ArticleItem(props) {
   return (
     <Link to={`/article/${props.id}`} className="article-link">
       <div className="article-item" id={props.id}>
-        <h2 className="article-title">{props.title}</h2>
+        <h2 className="article-title-comp">{props.title}</h2>
         <p className="article-author">{props.author}</p>
         <span className="article-date">
           <em>{props.publishingDate}</em>
