@@ -33,7 +33,7 @@ public class Article {
   private Long id;
 
   @NotBlank(message = "Title is required")
-  @Size(min = 5, max = 255, message = "Title must be between 5 and 255 characters")
+  @Size(min = 1, max = 255, message = "Title must be between 5 and 255 characters")
   @Column(nullable = false)
   private String title;
 

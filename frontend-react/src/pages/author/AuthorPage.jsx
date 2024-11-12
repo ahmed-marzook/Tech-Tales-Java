@@ -2,6 +2,7 @@ import "./AuthorPage.css";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import AuthorItem from "../../components/author-item/AuthorItem";
+import ErrorPage from "../not-found/ErrorPage";
 
 const BASE_URL = "http://localhost:8080/api/v1/author";
 
@@ -10,31 +11,24 @@ export default function AuthorPage() {
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
   const [authorList, setAuthorList] = useState([]);
 
-  // Ref to store the AbortController for canceling ongoing requests
   const abortControllerRef = useRef(null);
 
-  // Effect hook to fetch articles when page changes
   useEffect(() => {
     const fetchData = async () => {
-      // Cancel any ongoing requests before making a new one
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
 
-      // Create a new AbortController for the current request
       abortControllerRef.current = new AbortController();
 
       try {
         setIsLoading(true);
-        // Make GET request to fetch articles with pagination
         const response = await axios.get(BASE_URL, {
-          signal: abortControllerRef.current.signal, // Signal for request cancellation
+          signal: abortControllerRef.current.signal,
         });
         console.log(response);
-        // Update state with API response
         setAuthorList(response.data);
       } catch (err) {
-        // Handle request cancellation separately from other errors
         if (axios.isCancel(err)) {
           console.log("Request aborted:", err.message);
           return;
@@ -47,14 +41,22 @@ export default function AuthorPage() {
 
     fetchData();
 
-    // Cleanup function to abort any ongoing requests when component unmounts
-    // or when page changes
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
     };
   }, []);
+
+  if (error) {
+    return (
+      <ErrorPage
+        title="Error Loading Data"
+        message={`Error fetching data: ${error.message}`}
+        errorCode="500"
+      />
+    );
+  }
 
   return (
     <div className="container">

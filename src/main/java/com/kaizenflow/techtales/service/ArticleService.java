@@ -10,6 +10,7 @@ import com.kaizenflow.techtales.repository.ArticleRepository;
 import com.kaizenflow.techtales.repository.AuthorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.Objects;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +46,20 @@ public class ArticleService {
   }
 
   public Page<ArticleResponse> getAllArticlesByAuthorId(Long id, Pageable pageable) {
-    return articleRepository.findByAuthorId(id, pageable).map(articleMapper::articleToArticleResponse);
+    return articleRepository
+        .findByAuthorId(id, pageable)
+        .map(articleMapper::articleToArticleResponse);
   }
 
   @Transactional()
   public Long createNewArticle(ArticleCreateRequest newRequest) {
-    Author existingAuthor =
-        authorRepository
-            .findById(newRequest.authorId())
-            .orElseThrow(() -> new EntityNotFoundException("No Exist Author for That ID"));
+    Author existingAuthor = null;
+    if (Objects.nonNull(newRequest.authorId())) {
+      existingAuthor =
+          authorRepository
+              .findById(newRequest.authorId())
+              .orElseThrow(() -> new EntityNotFoundException("No Exist Author for That ID"));
+    }
     Article newArticleRequest =
         Article.builder()
             .title(newRequest.title())

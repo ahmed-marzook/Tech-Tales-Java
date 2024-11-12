@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    Page<Article> findByAuthorId(Long authorId, Pageable pageable);
+  Page<Article> findByAuthorId(Long authorId, Pageable pageable);
 }

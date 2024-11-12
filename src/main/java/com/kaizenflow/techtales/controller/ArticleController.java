@@ -38,7 +38,13 @@ public class ArticleController {
   }
 
   @GetMapping
-  public Page<ArticleResponse> getArticleList(@PageableDefault(value = 5, page = 0, sort = "publishingDate", direction = Sort.Direction.DESC) Pageable pageable) {
+  public Page<ArticleResponse> getArticleList(
+      @PageableDefault(
+              value = 5,
+              page = 0,
+              sort = "publishingDate",
+              direction = Sort.Direction.DESC)
+          Pageable pageable) {
     return articleService.getAllArticles(pageable);
   }
 
