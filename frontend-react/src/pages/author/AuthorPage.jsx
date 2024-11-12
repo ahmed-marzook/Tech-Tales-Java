@@ -1,52 +1,10 @@
 import "./AuthorPage.css";
-import { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import AuthorItem from "../../components/author-item/AuthorItem";
 import ErrorPage from "../not-found/ErrorPage";
-
-const BASE_URL = "http://localhost:8080/api/v1/author";
+import useFetchAuthorEffect from "../../apis/authors/useFetchAuthorEffect";
 
 export default function AuthorPage() {
-  const [error, setError] = useState(null); // Stores any API errors
-  const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const [authorList, setAuthorList] = useState([]);
-
-  const abortControllerRef = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-
-      abortControllerRef.current = new AbortController();
-
-      try {
-        setIsLoading(true);
-        const response = await axios.get(BASE_URL, {
-          signal: abortControllerRef.current.signal,
-        });
-        console.log(response);
-        setAuthorList(response.data);
-      } catch (err) {
-        if (axios.isCancel(err)) {
-          console.log("Request aborted:", err.message);
-          return;
-        }
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
+  const { authorList, isLoading, error } = useFetchAuthorEffect();
 
   if (error) {
     return (
@@ -61,6 +19,12 @@ export default function AuthorPage() {
   return (
     <div className="container">
       <h1>All Authors</h1>
+      {isLoading && (
+        <div className="loading-overlay">
+          <h2>Loading Authors...</h2>
+          {/* Optional: Add a loading spinner component here */}
+        </div>
+      )}
       <div className="author-list">
         {authorList.map((authorItem) => (
           <AuthorItem

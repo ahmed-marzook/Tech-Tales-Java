@@ -1,6 +1,7 @@
 import "./CreateArticlePage.css";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
+import useAuthorApi from "../../apis/authors/useFetchAuthorEffect";
 
 const BASE_URL = "http://localhost:8080/api/v1/author";
 
@@ -12,7 +13,7 @@ function CreateArticlePage() {
   });
   const [error, setError] = useState(null); // Stores any API errors
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const [authorList, setAuthorList] = useState([]);
+  const { authorList } = useAuthorApi();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,43 +68,6 @@ function CreateArticlePage() {
       [name]: value,
     }));
   };
-
-  // Fetching All Authors
-  const abortControllerRef = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-
-      abortControllerRef.current = new AbortController();
-
-      try {
-        setIsLoading(true);
-        const response = await axios.get(BASE_URL, {
-          signal: abortControllerRef.current.signal,
-        });
-        setAuthorList(response.data);
-      } catch (err) {
-        if (axios.isCancel(err)) {
-          console.log("Request aborted:", err.message);
-          return;
-        }
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
 
   // end
 
