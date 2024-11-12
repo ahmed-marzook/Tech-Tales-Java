@@ -96,7 +96,11 @@ function ArticlePage() {
           <div className="article-content">{article.content}</div>
 
           <footer className="article-footer">
-            <div className="author-info">By: {article.authorFullName}</div>
+            <div className="author-info">
+              {article.authorFirstName && article.authorLastName
+                ? `By: ${article.authorFirstName} ${article.authorLastName}`
+                : "By: Unknown"}
+            </div>
           </footer>
         </article>
       )}

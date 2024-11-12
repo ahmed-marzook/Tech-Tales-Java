@@ -28,15 +28,16 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 	implementation("org.liquibase:liquibase-core")
-	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation("org.mapstruct:mapstruct:1.6.2")
 	implementation("org.jsoup:jsoup:1.18.1")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("org.postgresql:postgresql")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
+	annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")

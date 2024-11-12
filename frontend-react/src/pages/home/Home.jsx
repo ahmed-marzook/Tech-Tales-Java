@@ -36,13 +36,13 @@ function Home() {
         const response = await axios.get(BASE_URL, {
           params: {
             page: page, // Current page number
-            size: 8, // Number of articles per page
+            size: 5, // Number of articles per page
           },
           signal: abortControllerRef.current.signal, // Signal for request cancellation
         });
 
         // Update state with API response
-        setMaxPage(response.data.page.totalPages);
+        setMaxPage(response.data.page.totalPages - 1);
         setArticleList(response.data.content);
       } catch (err) {
         // Handle request cancellation separately from other errors
@@ -106,7 +106,8 @@ function Home() {
               key={article.id}
               id={article.id}
               title={article.title}
-              author={article.authorFullName}
+              authorFirstName={article.authorFirstName}
+              authorLastName={article.authorLastName}
               publishingDate={article.publishingDate}
             />
           ))}

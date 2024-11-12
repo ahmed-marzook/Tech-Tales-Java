@@ -2,10 +2,12 @@ package com.kaizenflow.techtales.controller;
 
 import com.kaizenflow.techtales.dto.article.ArticleCreateRequest;
 import com.kaizenflow.techtales.dto.article.ArticleDTO;
+import com.kaizenflow.techtales.dto.article.ArticleResponse;
 import com.kaizenflow.techtales.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,17 +33,17 @@ public class ArticleController {
   }
 
   @GetMapping("/{id}")
-  public ArticleDTO getArticle(@PathVariable("id") Long id) {
+  public ArticleResponse getArticle(@PathVariable("id") Long id) {
     return articleService.getArticleById(id);
   }
 
   @GetMapping
-  public Page<ArticleDTO> getArticleList(@PageableDefault(value = 5, page = 0) Pageable pageable) {
+  public Page<ArticleResponse> getArticleList(@PageableDefault(value = 5, page = 0, sort = "publishingDate", direction = Sort.Direction.DESC) Pageable pageable) {
     return articleService.getAllArticles(pageable);
   }
 
   @GetMapping("/author/{id}")
-  public Page<ArticleDTO> getArticleByAuthorId(
+  public Page<ArticleResponse> getArticleByAuthorId(
       @PathVariable("id") Long id, @PageableDefault(value = 5, page = 0) Pageable pageable) {
     return articleService.getAllArticlesByAuthorId(id, pageable);
   }

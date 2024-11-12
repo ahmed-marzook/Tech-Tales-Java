@@ -2,8 +2,10 @@ package com.kaizenflow.techtales.service;
 
 import com.kaizenflow.techtales.dto.article.ArticleCreateRequest;
 import com.kaizenflow.techtales.dto.article.ArticleDTO;
+import com.kaizenflow.techtales.dto.article.ArticleResponse;
 import com.kaizenflow.techtales.entity.Article;
 import com.kaizenflow.techtales.entity.Author;
+import com.kaizenflow.techtales.mapper.ArticleMapper;
 import com.kaizenflow.techtales.repository.ArticleRepository;
 import com.kaizenflow.techtales.repository.AuthorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,22 +24,28 @@ public class ArticleService {
 
   private final AuthorRepository authorRepository;
 
+  private final ArticleMapper articleMapper;
+
   @Autowired
-  public ArticleService(ArticleRepository articleRepository, AuthorRepository authorRepository) {
+  public ArticleService(
+      ArticleRepository articleRepository,
+      AuthorRepository authorRepository,
+      ArticleMapper articleMapper) {
     this.articleRepository = articleRepository;
     this.authorRepository = authorRepository;
+    this.articleMapper = articleMapper;
   }
 
-  public ArticleDTO getArticleById(Long id) {
-    return articleRepository.getArticleById(id).orElseThrow();
+  public ArticleResponse getArticleById(Long id) {
+    return articleMapper.articleToArticleResponse(articleRepository.findById(id).orElseThrow());
   }
 
-  public Page<ArticleDTO> getAllArticles(Pageable pageable) {
-    return articleRepository.findAllArticleDTOs(pageable);
+  public Page<ArticleResponse> getAllArticles(Pageable pageable) {
+    return articleRepository.findAll(pageable).map(articleMapper::articleToArticleResponse);
   }
 
-  public Page<ArticleDTO> getAllArticlesByAuthorId(Long id, Pageable pageable) {
-    return articleRepository.findAllArticleDTOsByAuthorId(id, pageable);
+  public Page<ArticleResponse> getAllArticlesByAuthorId(Long id, Pageable pageable) {
+    return articleRepository.findByAuthorId(id, pageable).map(articleMapper::articleToArticleResponse);
   }
 
   @Transactional()

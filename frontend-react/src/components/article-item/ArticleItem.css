@@ -8,6 +8,10 @@
   margin: 0;
   font-size: 15pt;
 }
+.article-author {
+  opacity: 60%;
+  font-style: italic;
+}
 
 .article-item {
   margin-bottom: 20px;
