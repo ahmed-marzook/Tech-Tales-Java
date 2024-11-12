@@ -43,6 +43,17 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/articles/author/:authorId",
+    element: <Home />,
+    errorElement: (
+      <NotFoundPage
+        title="Page Not Found"
+        message="Oops! The page you're looking for doesn't exist."
+        errorCode="404"
+      />
+    ),
+  },
+  {
     path: "/article/:articleId",
     element: <ArticlePage />,
     errorElement: (

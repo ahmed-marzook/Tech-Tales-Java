@@ -4,17 +4,20 @@ import { useState, useEffect, useRef } from "react"; // React hooks for state an
 import axios from "axios"; // HTTP client for making API requests
 import ArticleItem from "../../components/article-item/ArticleItem"; // Component to render individual articles
 import ErrorPage from "../not-found/ErrorPage"; // Error page component for handling errors
-
-// Base URL for the articles API endpoint
-const BASE_URL = "http://localhost:8080/api/v1/articles";
+import { useParams } from "react-router-dom";
 
 function Home() {
   // State Management
+  const { authorId } = useParams();
   const [error, setError] = useState(null); // Stores any API errors
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
   const [articleList, setArticleList] = useState([]); // Stores the list of articles
   const [page, setPage] = useState(0); // Current page number (0-based)
   const [maxPage, setMaxPage] = useState(0); // Maximum available pages
+
+  const baseUrl = authorId
+    ? `http://localhost:8080/api/v1/articles/author/${authorId}`
+    : "http://localhost:8080/api/v1/articles";
 
   // Ref to store the AbortController for canceling ongoing requests
   const abortControllerRef = useRef(null);
@@ -33,7 +36,7 @@ function Home() {
       try {
         setIsLoading(true);
         // Make GET request to fetch articles with pagination
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get(baseUrl, {
           params: {
             page: page, // Current page number
             size: 5, // Number of articles per page

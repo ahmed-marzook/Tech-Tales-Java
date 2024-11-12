@@ -29,6 +29,7 @@ export default function AuthorPage() {
         {authorList.map((authorItem) => (
           <AuthorItem
             key={authorItem.id}
+            id={authorItem.id}
             firstName={authorItem.firstName}
             lastName={authorItem.lastName}
             bio={authorItem.bio}
