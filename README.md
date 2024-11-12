@@ -43,17 +43,46 @@ Run the application:
 ./gradlew bootRun
 ```
 
-The application should now be running on ```http://localhost:8080```🎉
+The application should now be running on `http://localhost:8080`🎉
 
-Open `index.html` to open the frontend.
+To run the frontend navigate to the `frontend-react` folder and run:
+
+```bash
+npm install
+```
+
+```bash
+npm run
+```
 
 ## Project Structure🏗️
 
-[Briefly describe your project structure here]
+```bash
+TECH-TALES-JAVA/
+├── .gradle/            # Gradle build system cache and files
+├── .idea/              # IntelliJ IDEA configuration files
+├── .trunk/             # Trunk configuration files
+├── bin/                # Compiled output directory
+├── build/              # Build output directory
+├── docker/             # Docker configuration files
+├── frontend/           # Main frontend application
+├── frontend-react/     # React-based frontend implementation
+├── gradle/             # Gradle wrapper and configuration
+├── src/                # Source code directory
+├── .gitattributes      # Git attributes configuration
+├── .gitignore          # Git ignore rules
+├── build.gradle.kts    # Gradle build configuration (Kotlin DSL)
+├── docker-compose.yml  # Docker Compose configuration
+├── gradlew             # Gradle wrapper script (Unix)
+├── gradlew.bat         # Gradle wrapper script (Windows)
+├── HELP.md             # Help documentation
+├── README.md           # Project documentation
+└── settings.gradle.kts # Gradle settings configuration
+```
 
 ## API Documentation📖
 
-Swagger API Docs: ```http://localhost:8080/swagger-ui.html```
+Swagger API Docs: `http://localhost:8080/swagger-ui.html`
 
 ## Contributing🤝
 
@@ -66,5 +95,7 @@ This project is licensed under the [Choose an appropriate license] License - see
 ## Contact📬
 
 For any queries, please contact [Your Contact Information].
-___
+
+---
+
 **KaizenFlow Technologies** - Continuously Improving Your Narrative Experience
