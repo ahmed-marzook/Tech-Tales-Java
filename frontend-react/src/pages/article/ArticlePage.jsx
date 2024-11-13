@@ -3,14 +3,15 @@ import "./ArticlePage.css";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ErrorPage from "../not-found/ErrorPage";
-
-const BASE_URL = "http://localhost:8080/api/v1/articles";
+import { useNavigate } from "react-router-dom";
+import API_CONFIG from "../../apis/configs/axiosConfig";
 
 function ArticlePage() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [article, setArticle] = useState("LOADING");
   const { articleId } = useParams();
+  const navigate = useNavigate();
 
   const abortControllerRef = useRef(null);
 
@@ -22,9 +23,12 @@ function ArticlePage() {
 
         abortControllerRef.current = new AbortController();
 
-        const response = await axios.get(`${BASE_URL}/${articleId}`, {
-          signal: abortControllerRef.current.signal,
-        });
+        const response = await axios.get(
+          `${API_CONFIG.ENDPOINTS.ARTICLES}/${articleId}`,
+          {
+            signal: abortControllerRef.current.signal,
+          }
+        );
         setArticle(response.data);
       } catch (err) {
         if (axios.isCancel(err)) {
@@ -46,6 +50,21 @@ function ArticlePage() {
     };
   }, [articleId]);
 
+  async function handleDeleteArticle() {
+    try {
+      const response = await axios.delete(
+        `${API_CONFIG.ENDPOINTS.ARTICLES}/${articleId}`
+      );
+
+      if (response.status === 204) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error deleting resource:", error);
+      // Handle error appropriately - maybe show an error message to user
+    }
+  }
+
   if (error) {
     return (
       <ErrorPage
@@ -65,7 +84,18 @@ function ArticlePage() {
       ) : (
         <article>
           <header className="article-header">
-            <h1 className="article-title">{article.title}</h1>
+            <div className="article-title">
+              <h1>{article.title}</h1>
+              <button onClick={handleDeleteArticle} className="btn">
+                Delete
+              </button>
+              <button
+                className="btn"
+                onClick={() => navigate(`/article/editor/${articleId}`)}
+              >
+                Update
+              </button>
+            </div>
             <div className="article-metadata">
               <div className="metadata-item">
                 <span className="metadata-label">Published:</span>

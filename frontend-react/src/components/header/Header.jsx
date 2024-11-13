@@ -2,7 +2,6 @@ import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/logoipsum-297.svg";
-import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -13,7 +12,7 @@ function Header() {
       <div className="nav-menu">
         <a href="/">Home</a>
         <a href="/authors">Authors</a>
-        <a href="/article/create">Create Article</a>
+        <a href="/article/editor">Create Article</a>
       </div>
       <div className="search-bar">
         <div className="search">

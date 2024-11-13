@@ -1,26 +1,54 @@
 import "./CreateArticlePage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuthorApi from "../../apis/authors/useFetchAuthorEffect";
-
-const BASE_URL = "http://localhost:8080/api/v1/author";
+import API_CONFIG from "../../apis/configs/axiosConfig";
 
 function CreateArticlePage() {
+  const { articleId } = useParams();
+  const [error, setError] = useState(null); // Stores any API errors
+  const [isLoading, setIsLoading] = useState(false); // Tracks loading state
+  const { authorList } = useAuthorApi();
+
+  const navigate = useNavigate();
+  const isUpdateMode = Boolean(articleId);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     authorId: "",
   });
-  const [error, setError] = useState(null); // Stores any API errors
-  const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const { authorList } = useAuthorApi();
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      if (!isUpdateMode) return;
+
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          `${API_CONFIG.ENDPOINTS.ARTICLES}/${articleId}`
+        );
+        const article = response.data;
+
+        setFormData({
+          title: article.title,
+          content: article.content,
+          authorId: article.authorId?.toString() || "",
+        });
+      } catch (err) {
+        console.error("Error fetching article:", err);
+        setError("Failed to fetch article data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [articleId, isUpdateMode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Set loading state
     setIsLoading(true);
-    // Clear any previous errors
     setError(null);
 
     try {
@@ -29,31 +57,42 @@ function CreateArticlePage() {
         authorId: parseInt(formData.authorId, 10),
       };
 
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/articles",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
+      let response;
+      if (isUpdateMode) {
+        response = await axios.put(
+          API_CONFIG.ENDPOINTS.ARTICLES,
+          {
+            ...payload,
+            id: parseInt(articleId, 10), // Include article ID in PUT request
           },
-        }
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      } else {
+        response = await axios.post(API_CONFIG.ENDPOINTS.ARTICLES, payload, {
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      console.log(
+        `Article ${isUpdateMode ? "updated" : "created"} successfully:`,
+        response.data
       );
 
-      console.log("Article created successfully:", response.data);
-
-      // Reset form after successful submission
-      setFormData({
-        title: "",
-        content: "",
-        authorId: "",
-      });
+      // Navigate to article page after success
+      navigate(`/article/${isUpdateMode ? articleId : response.data}`);
     } catch (err) {
-      console.error("Error creating article:", err);
-      // Axios provides error.response for API errors
+      console.error(
+        `Error ${isUpdateMode ? "updating" : "creating"} article:`,
+        err
+      );
       const errorMessage =
         err.response?.data?.message ||
         err.message ||
-        "An error occurred while creating the article";
+        `An error occurred while ${
+          isUpdateMode ? "updating" : "creating"
+        } the article`;
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -119,6 +158,8 @@ function CreateArticlePage() {
             value={formData.authorId}
             onChange={handleChange}
             className="form-select"
+            readOnly={isUpdateMode}
+            disabled={isUpdateMode}
           >
             <option value="">Select an author</option>
             {authorList.map((author) => (
