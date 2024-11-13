@@ -113,7 +113,9 @@ function CreateArticlePage() {
   return (
     <div className="article-container">
       <div className="article-header">
-        <h1 className="create-article-title">Create New Article</h1>
+        <h1 className="create-article-title">
+          {isUpdateMode ? "Update Article" : "Create New Article"}
+        </h1>
       </div>
 
       <form onSubmit={handleSubmit} className="article-form">
@@ -171,7 +173,7 @@ function CreateArticlePage() {
         </div>
 
         <button type="submit" className="submit-button">
-          Create Article
+          {isUpdateMode ? "Update Article" : "Create Article"}
         </button>
       </form>
     </div>
